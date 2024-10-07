@@ -1,0 +1,58 @@
+import Onboard from '@web3-onboard/core'
+import injectedModule from '@web3-onboard/injected-wallets'
+import { ethers } from 'ethers'
+
+const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/<INFURA_KEY>'
+
+const injected = injectedModule()
+
+const onboard = Onboard({
+  wallets: [injected],
+  chains: [
+    {
+      id: '0x1',
+      token: 'ETH',
+      label: 'Ethereum Mainnet',
+      rpcUrl: MAINNET_RPC_URL
+    },
+    {
+      id: '0x2105',
+      token: 'ETH',
+      label: 'Base',
+      rpcUrl: 'https://mainnet.base.org'
+    }
+  ]
+})
+
+const wallets = await onboard.connectWallet()
+
+console.log(wallets)
+
+if (wallets[0]) {
+  // create an ethers provider with the last connected wallet provider
+  const ethersProvider = new ethers.providers.Web3Provider(wallets[0].provider, 'any')
+  // if using ethers v6 this is:
+  // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
+
+  const signer = ethersProvider.getSigner()
+
+  // send a transaction with the ethers provider
+  const txn = await signer.sendTransaction({
+    to: '0x',
+    value: 100000000000000
+  })
+
+  const receipt = await txn.wait()
+  console.log(receipt)
+}
+npm i @web3-onboard/core @web3-onboard/injected-wallets @web3-onboard/transaction-preview
+yarn add @web3-onboard/core @web3-onboard/injected-wallets @web3-onboard/transaction-preview
+https://rpc.blocknative.com/boostADD PC [0xc9] DUP5 PUSH18 0xb17a26a6f18aa05b5497daa332bf9a
+SWAP14 [0x4b] PUSH22 0x18cc7dbf0923ea235a316b178c5ba90d33
+PUSH10 0xbf8d325cbadd13f866a1
+[0xb7] SWAP6 AND EXTCODESIZE [0xdd] DUP6 [0xc4] SHL PUSH24 0x
+bnc://app.binance.com/webview/webview?type=default&url=ahr0chm6ly93d3cuymluyw5jzs5jb20vzw4vc3vwcg9ydc9myxevag93lxrvlxnlbmqtyw5klxjly2vpdmutdg9rzw5zlw9ulwjpbmfuy2utd2vimy13ywxszxqtmdjmn2viodcyzwnhngexzwe0ngm3nzu3njcxnzbkmtm=&openexternal=truehttps://wallet.hooked.io/system/index/index.html#/educational_collaboratives{
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {
+  }
+}
